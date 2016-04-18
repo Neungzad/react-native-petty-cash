@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "petty-sss-app",
+      "masterKey": "v1L0ua6n0CdYdTOtY0O6CCUO2Xa5kr4I",
+      "appName": "Petty Cash App"
+    }
+  ]
+}
