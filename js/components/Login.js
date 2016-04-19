@@ -1,12 +1,11 @@
 import React, {Component, StyleSheet, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 var Button = require('react-native-button');
 var Icon = require('react-native-vector-icons/FontAwesome');
 var FBLogin = require('react-native-facebook-login');
 
-import {serverUrl} from '../env';
 import {loginFB} from '../actions';
 
 class Login extends React.Component {
@@ -16,24 +15,21 @@ class Login extends React.Component {
     }
  
     onLogin(e) {
-      // check and add user name
-
-      /*fetch(serverUrl+"/user", { 
-        method: "POST", 
-        body: JSON.stringify({
-          fb_id: e.profile.id, 
+      /*let fbData = {
+          fbId: e.profile.id, 
           name: e.profile.name, 
-          email: e.profile.email
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        // redirect
-        Actions.expenseMenu();
-      })
-      .done();*/
+          email: e.profile.email 
+      }
+*/
+      //console.log(e);
+      let fbData = {
+          fbId: "999999", 
+          name: "Tester", 
+          email: "test@gmail.com"
+      };
 
-      this.props.onLoginFB();
+      // check exist user or add new user 
+      this.props.onLoginFB(fbData);
     }
 
     onError(e){
@@ -45,9 +41,9 @@ class Login extends React.Component {
         return (
         	<View style={styles.container}>
             <Text style={styles.headline}>SSS</Text>
-            <Text style={styles.subline}>Know Your Petty Cash</Text>
+            <Text style={styles.subline} onPress={this.onLogin}>Know Your Petty Cash</Text>
             <FBLogin
-                onLogin={this.onLogin}                
+                onLogin={this.onLogin}                 
                 onError={this.onError}                
               />
 
@@ -92,7 +88,7 @@ const select = (store) => {
 
 const actions = (dispatch) => {
   return {
-    onLoginFB: () => { dispatch(loginFB()) }
+    onLoginFB: (data) => { dispatch(loginFB(data)) }
   }
 }
  

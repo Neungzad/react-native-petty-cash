@@ -1,4 +1,4 @@
-import React, {Component, StyleSheet, Text, View, TextInput, Picker, DatePickerAndroid, TouchableWithoutFeedback} from 'react-native';
+import React, {Component, StyleSheet, Text, View, TextInput, Picker, DatePickerAndroid, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Navbar from '../common/Navbar';
 import DatePicker from '../common/DatePicker';
@@ -10,6 +10,14 @@ class ExpenseAdd extends React.Component {
       this.state = {
         language: ''
       }
+    }
+
+    componentWillMount() {
+        
+    }
+
+    onSubmit() {
+      alert("text");
     }
 
     render() {
@@ -89,7 +97,9 @@ class ExpenseAdd extends React.Component {
           </View>
 
           <View style={styles.submit}>
-            <Text style={styles.fontWhite} > Submit </Text>
+            <TouchableHighlight onPress={this.onSubmit}>
+              <Text style={styles.fontWhite}> Submit dd</Text>              
+            </TouchableHighlight>
           </View>
       	</View>
       );
@@ -143,5 +153,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 });
+
+
 
 export default ExpenseAdd;

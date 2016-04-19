@@ -12,19 +12,24 @@ import Login from './components/Login';
 import ExpenseList from './components/ExpenseList';
 import ExpenseAdd from './components/ExpenseAdd';
 import ExpenseView from './components/ExpenseView';
+import {connect} from 'react-redux';
 
 class RootRouter extends Component {
     constructor(props) {
-        super(props);
+      super(props);
     }
     render() {
-        return ( 
+        
+        if (!this.props.isLoggedIn) {
+          return <Login />
+        }
+
+        return (
         	<View style={styles.container}>
 		    		<Router hideNavBar={true}>
 		    			<Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom}/>
               <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight}/> 
-              <Route name="login" component={Login} initial={true} />
-              <Route name="expenseMenu">                
+              <Route name="expenseMenu" initial={true}>                
 								<Router>
 									<Route name="expenseList" component={ExpenseList} title="Expense List" hideNavBar={true} /> 
 									<Route name="expenseView" component={ExpenseView} title="Detail" hideNavBar={true} />
@@ -47,5 +52,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RootRouter;
+const select = (store) => {
+  return {
+    isLoggedIn: store.user.isLoggedIn,
+  }
+}
 
+export default connect(select)(RootRouter);

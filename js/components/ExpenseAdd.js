@@ -1,15 +1,33 @@
-import React, {Component, StyleSheet, Text, View, TextInput, Picker, DatePickerAndroid, TouchableWithoutFeedback} from 'react-native';
+import React, {Component, StyleSheet, Text, View, TextInput, Picker, DatePickerAndroid, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+
 import Navbar from '../common/Navbar';
 import DatePicker from '../common/DatePicker';
 var Icon = require('react-native-vector-icons/FontAwesome');
+
+import {createExpense} from '../actions';
 
 class ExpenseAdd extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        language: ''
+        amount: '',
+        category: '',
+        description: ''
       }
+
+      this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit() {  
+      let data = {
+        amount: this.state.amount,
+        category: this.state.category,
+        date: this.refs.date.state.simpleText,
+        description: this.state.description,
+      };
+      this.props.createExpense(data);
     }
 
     render() {
@@ -40,6 +58,7 @@ class ExpenseAdd extends React.Component {
               </View>
               <View style={styles.inputContainer}>
                <TextInput
+                  onChangeText={(amount) => this.setState({amount: amount})}
                   keyboardType={'numeric'}
                   style={styles.textInput} 
                   placeholder={'Amount'}
@@ -54,8 +73,8 @@ class ExpenseAdd extends React.Component {
               </View>
               <View style={styles.inputContainer}>
                   <Picker
-                    selectedValue={this.state.language}
-                    onValueChange={(lang) => this.setState({language: lang})}>
+                    selectedValue={this.state.category}
+                    onValueChange={(lang) => this.setState({category: lang})}>
                     { CATEGORIES.map((category)=>(
                       <Picker.Item key={category} label={category.label} value={category.value} />
                     ))}
@@ -69,7 +88,7 @@ class ExpenseAdd extends React.Component {
                 <Text style={styles.label}>Date</Text>               
               </View>
               <View style={styles.inputContainer}>               
-                <DatePicker />
+                <DatePicker ref="date" />
               </View>
             </View>
 
@@ -80,6 +99,7 @@ class ExpenseAdd extends React.Component {
               </View>
               <View style={{alignItems:'flex-start'}}>
                <TextInput
+                  onChangeText={(text) => this.setState({description: text})}
                   multiline={true}
                   style={styles.textareaInput} 
                   placeholder={'Description'}
@@ -89,7 +109,9 @@ class ExpenseAdd extends React.Component {
           </View>
 
           <View style={styles.submit}>
-            <Text style={styles.fontWhite} > Submit </Text>
+            <TouchableHighlight onPress={this.onSubmit}>
+              <Text style={styles.fontWhite}> Submit dd</Text>              
+            </TouchableHighlight>            
           </View>
       	</View>
       );
@@ -144,4 +166,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ExpenseAdd;
+const actions = (dispatch) => {
+  return {
+    createExpense: (data) => {dispatch(createExpense(data))}
+  }
+}
+
+export default connect(null,actions)(ExpenseAdd);

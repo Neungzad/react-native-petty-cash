@@ -1,3 +1,3 @@
 module.exports = {
-	serverUrl : "http://localhost:6069"
+	serverUrl : "http://192.168.0.27:1337/parse"
 }
