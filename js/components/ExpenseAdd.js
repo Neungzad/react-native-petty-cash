@@ -28,6 +28,11 @@ class ExpenseAdd extends React.Component {
         description: this.state.description,
       };
       this.props.createExpense(data);
+
+      if(this.props.isCreated){
+        Actions.expenseMenu();
+      }
+      console.log('this.props.isCreated = '+this.props.isCreated);
     }
 
     render() {
@@ -166,10 +171,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const select = (store) => {
+  return {
+    isCreated : store.expense.isCreated,
+  }
+}
+
 const actions = (dispatch) => {
   return {
     createExpense: (data) => {dispatch(createExpense(data))}
   }
 }
 
-export default connect(null,actions)(ExpenseAdd);
+export default connect(select,actions)(ExpenseAdd);

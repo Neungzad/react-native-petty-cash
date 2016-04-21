@@ -5,22 +5,15 @@
 'use strict';
 
 const initialState = {
-  
+	isCreated: false
 };
 
 const expense = (state = initialState, action) => {
   switch (action.type) {
-    case '' :
+    case 'EXPENSE_CREATE_SUCCESS' :    	
+    	return { isCreated: true };
 
-    case '' :    
   }
-
- /* if (action.type === 'EXPENSE_CREATE_SUCCESS') {
-    return {
-     
-      }
-    };
-  }*/
 
   return state;
 }

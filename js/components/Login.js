@@ -8,27 +8,36 @@ var FBLogin = require('react-native-facebook-login');
 
 import {loginFB} from '../actions';
 
+var Parse = require('parse/react-native');
+
 class Login extends React.Component {
     constructor(props) {
       super(props);
       this.onLogin = this.onLogin.bind(this);
     }
+
+    componentDidMount() {
+      let cuurentuser = Parse.User.currentAsync();
+      console.log('componentDidMount');
+      console.log(cuurentuser);
+    }
  
     onLogin(e) {
-      /*let fbData = {
-          fbId: e.profile.id, 
-          name: e.profile.name, 
-          email: e.profile.email 
-      }
-*/
+      
+
       //console.log(e);
       let fbData = {
           fbId: "999999", 
           name: "Tester", 
           email: "test@gmail.com"
-      };
+      }; 
 
-      // check exist user or add new user 
+      /*let fbData = {
+          fbId: e.profile.id, 
+          name: e.profile.name, 
+          email: e.profile.email 
+      }*/
+      
       this.props.onLoginFB(fbData);
     }
 

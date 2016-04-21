@@ -6,13 +6,17 @@
 
 import React, { Component } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import pettyApp from './reducers';
 import RootRouter from './RootRouter';
 import {serverUrl} from './env';
 
 var Parse = require('parse/react-native');
-var store = createStore(pettyApp);
+const store = createStore(
+  pettyApp,
+  applyMiddleware(thunk)
+);
 
 function setup(): React.Component {
   Parse.initialize("petty-sss-app");
@@ -30,7 +34,7 @@ function setup(): React.Component {
       );
     }
   }
-
+ 
   return Root;
 }
 

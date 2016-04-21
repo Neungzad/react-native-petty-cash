@@ -22,15 +22,15 @@ function createExpense(data) {
 		amount: Number(data.amount),
     category: data.category,
     date: new Date(data.date),
-    description: data.description
+    description: data.description,
+    createdBy: Parse.User.current()
 	}
 	expense.save(expenseData).then(function(object){
 		console.log("Add new expense "+object.id);
 	});
-
+ 
   return {
-    type: 'EXPENSE_CREATE_SUCCESS',
-    ...data
+    type: 'EXPENSE_CREATE_SUCCESS'    
   };
 }
  

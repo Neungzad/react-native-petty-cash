@@ -8,4 +8,5 @@ var { combineReducers } = require('redux');
 
 module.exports = combineReducers({
   user: require('./user'),
+  expense: require('./expense'),
 });
