@@ -20,6 +20,13 @@ class ExpenseAdd extends React.Component {
       this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidUpdate() {
+      if(this.props.isCreated){
+        Actions.expenseMenu();
+      }
+      console.log('componentDidUpdate : this.props.isCreated = '+this.props.isCreated);
+    }
+
     onSubmit() {  
       let data = {
         amount: this.state.amount,
@@ -27,12 +34,10 @@ class ExpenseAdd extends React.Component {
         date: this.refs.date.state.simpleText,
         description: this.state.description,
       };
-      this.props.createExpense(data);
-
-      if(this.props.isCreated){
-        Actions.expenseMenu();
+      if (data.amount == '' || data.date == '') {
+        alert("กรุณากรอกจำนวนเงิน และ วันที่");
       }
-      console.log('this.props.isCreated = '+this.props.isCreated);
+      this.props.createExpense(data);      
     }
 
     render() {
@@ -113,11 +118,11 @@ class ExpenseAdd extends React.Component {
             </View>
           </View>
 
-          <View style={styles.submit}>
-            <TouchableHighlight onPress={this.onSubmit}>
-              <Text style={styles.fontWhite}> Submit dd</Text>              
-            </TouchableHighlight>            
-          </View>
+          <TouchableHighlight onPress={this.onSubmit}>
+            <View style={styles.submitBlock}>
+                <Text style={styles.submitBtn}> Submit </Text>              
+            </View>
+          </TouchableHighlight>            
       	</View>
       );
     }
@@ -158,16 +163,18 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  submit: {
+  submitBlock: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#900',
     padding: 15,
-    marginTop: 20,
+    backgroundColor: '#900',
   },
-  fontWhite: {
+  submitBtn: {
     fontSize: 18,
-    color: '#fff'
+    color: '#fff',
+    textAlign: 'center',
+    textAlignVertical: 'center',
   }
 });
 

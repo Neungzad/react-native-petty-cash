@@ -14,24 +14,24 @@ function fetchExpense() {
 }
 
 function createExpense(data) {
-	console.log("call action createExpense();");
+  return (dispatch) => {
+    console.log("call action createExpense();");
 
-	// add new expense
-	let expense = new Expense();
-	let expenseData = {
-		amount: Number(data.amount),
-    category: data.category,
-    date: new Date(data.date),
-    description: data.description,
-    createdBy: Parse.User.current()
-	}
-	expense.save(expenseData).then(function(object){
-		console.log("Add new expense "+object.id);
-	});
- 
-  return {
-    type: 'EXPENSE_CREATE_SUCCESS'    
-  };
+    // add new expense
+    let expense = new Expense();
+    let expenseData = {
+      amount: Number(data.amount),
+      category: data.category,
+      date: new Date(data.date),
+      description: data.description,
+      createdBy: Parse.User.current()
+    }
+    expense.save(expenseData).then(function(object){
+      console.log("Add new expense "+object.id);
+      console.log("Call reducer expense");
+      return dispatch({type: 'EXPENSE_CREATE_SUCCESS'});
+    });  
+  }
 }
  
 function updateExpense() {
