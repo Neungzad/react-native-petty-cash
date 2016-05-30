@@ -1,8 +1,12 @@
 import React, {Component, StyleSheet, Text, View, ListView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+
 import ActionButton from 'react-native-action-button';
 import Navbar from '../common/Navbar';
 import ExpenseRecord from './ExpenseRecord';
+
+import {fetchExpense} from '../actions';
 
 class ExpenseList extends React.Component {
     constructor(props) {
@@ -16,6 +20,8 @@ class ExpenseList extends React.Component {
     }
 
     componentDidMount() {
+      this.props.fetchExpense();
+
       let data = {
         "data":[{
             "date": 'Today',
@@ -78,6 +84,10 @@ class ExpenseList extends React.Component {
     }
 
     render() {
+      console.log("Status load : " + this.props.isLoaded);
+      console.log("========DATA==========");
+      console.log(this.props.expenseList);
+
       return (
       	<View style={styles.container}> 
           <Navbar
@@ -146,4 +156,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ExpenseList;
+const select = (store) => {
+  return {
+    isLoaded: store.expense.isLoaded,
+    expenseList: store.expense.expenseList
+  }
+}
+
+const actions = (dispatch) => {
+  return {
+    fetchExpense: () => { dispatch(fetchExpense()) }
+  }
+} 
+
+export default connect(select, actions)(ExpenseList);

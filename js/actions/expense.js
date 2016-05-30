@@ -8,9 +8,25 @@ var Parse = require('parse/react-native');
 const Expense = Parse.Object.extend("Expense");
 
 function fetchExpense() {
-  return {
-    type: 'EXPENSE_FETCH_SUCCESS'
-  };
+  return (dispatch) => {
+    var result = _fetchExpense();
+    return result.then((action)=>dispatch(action));
+  }
+}
+
+async function _fetchExpense() {
+  // call api by user
+  const expenses = await new Parse.Query("Expense")
+      .equalTo("createdBy", Parse.User.current())
+      .descending("date")
+      .find();
+
+  const action = {
+    type: 'EXPENSE_FETCH_SUCCESS',
+    data: expenses  
+  }; 
+  
+  return Promise.resolve(action);
 }
 
 function createExpense(data) {

@@ -9,7 +9,7 @@ var FBLogin = require('react-native-facebook-login');
 import {loginFB} from '../actions';
 
 var Parse = require('parse/react-native');
-
+ 
 class Login extends React.Component {
     constructor(props) {
       super(props);
